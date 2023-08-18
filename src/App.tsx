@@ -1,5 +1,12 @@
+import { Layout } from "./components/Layout";
+import { GameProvider } from "./provider";
+
 function App() {
-  return <h1 className="">Hello world!</h1>;
+  return (
+    <GameProvider>
+      <Layout>hello</Layout>
+    </GameProvider>
+  );
 }
 
 export default App;
