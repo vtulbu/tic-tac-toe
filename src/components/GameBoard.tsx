@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import { GameBoardHeader } from "./GameBoardHeader";
+import { GamePanel } from "./GamePanel";
+import { GameBoardResults } from "./GameBoardResults";
 
 export const GameBoard = () => {
   return (
@@ -15,9 +18,12 @@ export const GameBoard = () => {
         damping: 15,
         duration: 2,
       }}
-      className="flex flex-col gap-8 items-center"
+      // className="flex flex-col gap-8 items-center"
+      className="h-screen p-6 w-full"
     >
-      Game
+      <GameBoardHeader />
+      <GamePanel />
+      <GameBoardResults />
     </motion.div>
   );
 };

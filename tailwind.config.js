@@ -13,6 +13,8 @@ export default {
         pickMenuShadow: `inset 0 -8px 0 0 #10212A`,
         newGameCpu: `inset 0 -8px 0 0 #CC8B13`,
         newGamePlayer: `inset 0 -8px 0 0 #118C87`,
+        resetButton: `inset 0 -4px 0 0 #6B8997`,
+        turnInfo: `inset 0 -4px 0 0 #10212A`,
       }),
     },
     fontFamily: {
