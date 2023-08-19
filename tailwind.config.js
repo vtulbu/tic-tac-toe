@@ -1,20 +1,25 @@
 /** @type {import('tailwindcss').Config} */
+
+import { colors } from "./src/utils/constants";
+
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: () => ({
+        pickMenuShadow: `inset 0 -8px 0 0 #10212A`,
+        newGameCpu: `inset 0 -8px 0 0 #CC8B13`,
+        newGamePlayer: `inset 0 -8px 0 0 #118C87`,
+      }),
+    },
+    fontFamily: {
+      "Outfit": ["Outfit", "sans-serif"],
+    },
     colors: {
-      "dark-navy": "#1A2A33",
-      "semi-dark-navy": "#1F3641",
-      "silver": "#A8BFC9",
-      "silver-hover": "#DBE8ED",
-      "light-blue": "#31C3BD",
-      "light-blue-hover": "#65E9E4",
-      "light-yellow": "#F2B137",
-      "light-yellow-hover": "#FFC860",
+      ...colors
     }
   },
   plugins: [],
