@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { GameBoardHeader } from "./GameBoardHeader";
 import { GamePanel } from "./GamePanel";
 import { GameBoardResults } from "./GameBoardResults";
@@ -11,6 +11,7 @@ export const GameBoard = () => {
 
   return (
     <motion.div
+      key={"game-board"}
       transition={{
         type: "spring",
         stiffness: 100,
@@ -18,15 +19,20 @@ export const GameBoard = () => {
         duration: 2,
       }}
       className="h-screen p-6 w-full"
+      initial={{ y: 800 }}
+      animate={{ y: 0 }}
+      exit={{ y: -800 }}
     >
       <GameBoardHeader />
       <GamePanel />
       <GameBoardResults />
-      {isModalOpen && (
-        <Modal>
-          <ModalContent />
-        </Modal>
-      )}
+      <AnimatePresence>
+        {isModalOpen && (
+          <Modal>
+            <ModalContent />
+          </Modal>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
