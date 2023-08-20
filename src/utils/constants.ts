@@ -31,3 +31,9 @@ export const emptyGamePanel = [
   null,
   null,
 ];
+
+export const zeroResults = {
+  [Mark.X]: 0,
+  [Mark.O]: 0,
+  ties: 0,
+};

@@ -12,7 +12,11 @@ export const GameBoardResults = () => {
 
   const getLabel = (label: (typeof resultBoxes)[number]["label"]) => {
     if (opponent === Opponent.CPU) {
-      return firstPlayersMark === label ? "(player)" : "(cpu)";
+      if (label === Mark.X) {
+        return firstPlayersMark === Mark.X ? "(player)" : "(cpu)";
+      } else if (label === Mark.O) {
+        return firstPlayersMark === Mark.O ? "(player)" : "(cpu)";
+      }
     } else {
       if (label === Mark.X) {
         return firstPlayersMark === Mark.X ? "(P1)" : "(P2)";
