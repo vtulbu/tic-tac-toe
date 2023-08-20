@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useGameContext } from "../provider";
 import { Mark } from "../utils/constants";
 import { Card } from "./Card";
@@ -8,28 +9,31 @@ export const GamePanel = () => {
   const [{ gamePanel, turn }, { setGamePanel, setTurn }] = useGameContext();
 
   return (
-    <div className="flex flex-col gap-5 mb-5">
-      {gamePanel.map((r, i) => {
+    <div className="grid gap-5 mb-5 grid-rows-3 grid-cols-3">
+      {gamePanel.map((c, i) => {
         return (
-          <div key={i} className="flex gap-5">
-            {r.map((c, j) => {
-              return (
-                <Card
-                  key={j}
-                  onClick={() => {
-                    if (c === null) {
-                      const newGamePanel = [...gamePanel];
-                      newGamePanel[i][j] = turn;
-                      setTurn(turn === Mark.X ? Mark.O : Mark.X);
-                      setGamePanel(newGamePanel);
-                    }
-                  }}
-                >
-                  {c === null ? null : c === Mark.X ? <IconX /> : <IconO />}
-                </Card>
-              );
-            })}
-          </div>
+          <Card
+            key={`${c} ${i}`}
+            onClick={() => {
+              if (c === null) {
+                const newGamePanel = [...gamePanel];
+                newGamePanel[i] = turn;
+                setTurn(turn === Mark.X ? Mark.O : Mark.X);
+                setGamePanel(newGamePanel);
+              }
+            }}
+          >
+            <motion.span
+              initial={{
+                scale: 0,
+              }}
+              animate={{
+                scale: c === null ? 0 : 1,
+              }}
+            >
+              {c === null ? null : c === Mark.X ? <IconX /> : <IconO />}
+            </motion.span>
+          </Card>
         );
       })}
     </div>

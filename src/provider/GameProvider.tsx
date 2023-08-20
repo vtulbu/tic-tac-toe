@@ -1,6 +1,9 @@
 import React, { FC, PropsWithChildren } from "react";
 import { GameContextType } from "./types";
-import { Mark, Opponent } from "../utils/constants";
+import { Mark, Opponent, emptyGamePanel } from "../utils/constants";
+import { getWinner } from "../utils/getWinner";
+import { checkTie } from "../utils/checkTie";
+import { BoardType } from "../utils/types";
 
 export const GameContext = React.createContext<GameContextType>([
   {
@@ -11,22 +14,24 @@ export const GameContext = React.createContext<GameContextType>([
       o: 0,
       tie: 0,
     },
-    gamePanel: [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ],
+    gamePanel: emptyGamePanel,
     turn: Mark.X,
+    isModalOpen: false,
+    isGameFinished: false,
   },
   {
     setFirstPlayerMark: () => undefined,
     setOpponent: () => undefined,
     setGamePanel: () => undefined,
     setTurn: () => undefined,
+    setIsModalOpen: () => undefined,
+    setIsGameFinished: () => undefined,
   },
 ]);
 
 export const GameProvider: FC<PropsWithChildren> = (props) => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isGameFinished, setIsGameFinished] = React.useState(false);
   const [firstPlayersMark, setFirstPlayerMark] = React.useState<Mark>(Mark.O);
   const [opponent, setOpponent] = React.useState<Opponent | null>(null);
   const [turn, setTurn] = React.useState<Mark>(Mark.X);
@@ -36,11 +41,49 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
     tie: 0,
   });
 
-  const [gamePanel, setGamePanel] = React.useState<(Mark | null)[][]>([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
+  const [gamePanel, setGamePanel] = React.useState<BoardType>(emptyGamePanel);
+
+  React.useEffect(() => {
+    const isXWinner = getWinner(gamePanel, Mark.X);
+    if (isXWinner) {
+      setResults((prev) => ({ ...prev, x: prev.x + 1 }));
+      setIsModalOpen(true);
+      setIsGameFinished(true);
+      return;
+    }
+
+    const isOWinner = getWinner(gamePanel, Mark.O);
+    if (isOWinner) {
+      setResults((prev) => ({ ...prev, o: prev.o + 1 }));
+      setIsModalOpen(true);
+      setIsGameFinished(true);
+      return;
+    }
+
+    const isTie = checkTie(gamePanel);
+    if (isTie) {
+      setResults((prev) => ({ ...prev, tie: prev.tie + 1 }));
+      setIsModalOpen(true);
+      setIsGameFinished(true);
+      return;
+    }
+
+    if (opponent === Opponent.CPU) {
+      const cpuMark = firstPlayersMark === Mark.X ? Mark.O : Mark.X;
+      if (turn === cpuMark) {
+        // const emptyCells = gamePanel.reduce<number[]>(
+        //   (acc, cell, index) => (cell === null ? [...acc, index] : acc),
+        //   []
+        // );
+        // const randomCell =
+        //   emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        // const newGamePanel = [...gamePanel];
+        // newGamePanel[randomCell] = cpuMark;
+        // setGamePanel(newGamePanel);
+        // setTurn(turn === Mark.X ? Mark.O : Mark.X);
+      }
+    }
+  }, [turn, opponent]);
 
   return (
     <GameContext.Provider
@@ -51,12 +94,16 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
           results,
           gamePanel,
           turn,
+          isModalOpen,
+          isGameFinished,
         },
         {
           setFirstPlayerMark,
           setOpponent,
           setGamePanel,
           setTurn,
+          setIsModalOpen,
+          setIsGameFinished,
         },
       ]}
     >

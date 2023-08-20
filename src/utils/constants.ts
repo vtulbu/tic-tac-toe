@@ -9,6 +9,7 @@ export enum Opponent {
 }
 
 export const colors = {
+  black: "#000000",
   "dark-navy": "#1A2A33",
   "semi-dark-navy": "#1F3641",
   silver: "#A8BFC9",
@@ -18,3 +19,15 @@ export const colors = {
   "light-yellow": "#F2B137",
   "light-yellow-hover": "#FFC860",
 };
+
+export const emptyGamePanel = [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+];
