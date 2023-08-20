@@ -4,6 +4,7 @@ import { Mark, Opponent, emptyGamePanel } from "../utils/constants";
 import { getWinner } from "../utils/getWinner";
 import { checkTie } from "../utils/checkTie";
 import { BoardType } from "../utils/types";
+import { changeFavicon } from "../utils/changeFavicon";
 
 export const GameContext = React.createContext<GameContextType>([
   {
@@ -46,6 +47,8 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
   const [gamePanel, setGamePanel] = React.useState<BoardType>(emptyGamePanel);
 
   React.useEffect(() => {
+    changeFavicon(turn);
+
     const isXWinner = getWinner(gamePanel, Mark.X);
     if (isXWinner) {
       setResults((prev) => ({ ...prev, x: prev.x + 1 }));
@@ -84,7 +87,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
         // setTurn(turn === Mark.X ? Mark.O : Mark.X);
       }
     }
-  }, [turn, opponent]);
+  }, [turn]);
 
   const resetGame = useCallback(() => {
     setOpponent(null);

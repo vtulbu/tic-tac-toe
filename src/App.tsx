@@ -6,6 +6,7 @@ import { useGameContext } from "./provider";
 
 function App() {
   const [{ opponent }] = useGameContext();
+
   return (
     <Layout>
       <AnimatePresence>
