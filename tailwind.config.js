@@ -15,6 +15,7 @@ export default {
         newGamePlayer: `inset 0 -8px 0 0 #118C87`,
         resetButton: `inset 0 -4px 0 0 #6B8997`,
         turnInfo: `inset 0 -4px 0 0 #10212A`,
+        nextRound: `inset 0 -4px 0 0 #CC8B13`,
       }),
     },
     fontFamily: {

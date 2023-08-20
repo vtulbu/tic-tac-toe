@@ -3,13 +3,14 @@ import { GameBoardHeader } from "./GameBoardHeader";
 import { GamePanel } from "./GamePanel";
 import { GameBoardResults } from "./GameBoardResults";
 import { Modal } from "./Modal";
+import ModalContent from "./ModalContent";
 import { useGameContext } from "../provider";
 
 export const GameBoard = () => {
   const [{ isModalOpen }] = useGameContext();
+
   return (
     <motion.div
-      key={"gameBoard"}
       transition={{
         type: "spring",
         stiffness: 100,
@@ -21,7 +22,11 @@ export const GameBoard = () => {
       <GameBoardHeader />
       <GamePanel />
       <GameBoardResults />
-      {isModalOpen && <Modal />}
+      {isModalOpen && (
+        <Modal>
+          <ModalContent />
+        </Modal>
+      )}
     </motion.div>
   );
 };

@@ -3,7 +3,7 @@ import { Mark, Opponent } from "../utils/constants";
 
 const resultBoxes = [
   { label: Mark.X, className: "bg-light-blue" },
-  { label: "tie", className: "bg-silver" },
+  { label: "ties", className: "bg-silver" },
   { label: Mark.O, className: "bg-light-yellow" },
 ] as const;
 
@@ -14,8 +14,13 @@ export const GameBoardResults = () => {
     if (opponent === Opponent.CPU) {
       return firstPlayersMark === label ? "(player)" : "(cpu)";
     } else {
-      return firstPlayersMark === label ? "(P1)" : "(P2)";
+      if (label === Mark.X) {
+        return firstPlayersMark === Mark.X ? "(P1)" : "(P2)";
+      } else if (label === Mark.O) {
+        return firstPlayersMark === Mark.O ? "(P1)" : "(P2)";
+      }
     }
+    return "";
   };
 
   return (

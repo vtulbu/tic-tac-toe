@@ -7,12 +7,12 @@ interface GameState {
   results: {
     [Mark.X]: number;
     [Mark.O]: number;
-    tie: number;
+    ties: number;
   };
   gamePanel: BoardType;
   turn: Mark;
   isModalOpen: boolean;
-  isGameFinished: boolean;
+  winner: Mark | null;
 }
 
 interface GameActions {
@@ -21,7 +21,9 @@ interface GameActions {
   setGamePanel: React.Dispatch<React.SetStateAction<BoardType>>;
   setTurn: React.Dispatch<React.SetStateAction<Mark>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsGameFinished: React.Dispatch<React.SetStateAction<boolean>>;
+  setWinner: React.Dispatch<React.SetStateAction<Mark | null>>;
+  resetGame: () => void;
+  nextRound: () => void;
 }
 
 export type GameContextType = [GameState, GameActions];
