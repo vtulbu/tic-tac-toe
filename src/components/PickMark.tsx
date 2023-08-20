@@ -15,6 +15,7 @@ export const PickMark = () => {
       <div className="flex bg-dark-navy mb-4 rounded-lg p-2 gap-3">
         {[IconXOutline, IconOOutline].map((Icon, idx) => (
           <PickButton
+            key={`pick-mark-${idx}`}
             className={
               firstPlayersMark === Mark.X && idx === 0
                 ? "bg-silver"
