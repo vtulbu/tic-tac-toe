@@ -13,6 +13,7 @@ interface GameState {
   turn: Mark;
   isModalOpen: boolean;
   winner: Mark | null;
+  restart: boolean;
 }
 
 interface GameActions {
@@ -24,6 +25,7 @@ interface GameActions {
   setWinner: React.Dispatch<React.SetStateAction<Mark | null>>;
   resetGame: () => void;
   nextRound: () => void;
+  setRestart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type GameContextType = [GameState, GameActions];

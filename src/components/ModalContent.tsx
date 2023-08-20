@@ -6,8 +6,10 @@ import { IconO } from "./SVG/IconO";
 import { motion } from "framer-motion";
 
 export default function ModalContent() {
-  const [{ winner, firstPlayersMark, opponent }, { resetGame, nextRound }] =
-    useGameContext();
+  const [
+    { winner, firstPlayersMark, opponent, restart },
+    { resetGame, nextRound, setIsModalOpen, setRestart },
+  ] = useGameContext();
   const isXWinner = winner === Mark.X;
 
   const getTitleText = () => {
@@ -62,33 +64,57 @@ export default function ModalContent() {
               : "text-silver"
           }`}
         >
-          {winner ? "Takes the round" : "Round Tied"}
+          {restart
+            ? "RESTART GAME?"
+            : winner
+            ? "Takes the round"
+            : "Round Tied"}
         </p>
       </div>
       <div className="flex gap-4">
         {[
           { id: 1, label: "QUIT" },
           { id: 2, label: "NEXT ROUND" },
-        ].map((b) => {
-          return (
-            <Button
-              key={b.id + b.label}
-              text={b.label}
-              className={`p-4 ${
-                b.id === 1
-                  ? "bg-light-blue shadow-resetButton"
-                  : "bg-light-yellow shadow-nextRound"
-              }`}
-              onClick={() => {
-                if (b.id === 1) {
-                  resetGame();
-                } else if (b.id === 2) {
-                  nextRound();
-                }
-              }}
-            />
-          );
-        })}
+          { id: 3, label: "NO, CANCEL" },
+          { id: 4, label: "YES, RESTART" },
+        ]
+          .filter((b) => {
+            if (restart) {
+              return b.id === 3 || b.id === 4;
+            } else {
+              return b.id === 1 || b.id === 2;
+            }
+          })
+          .map((b) => {
+            return (
+              <Button
+                key={b.id + b.label}
+                text={b.label}
+                className={`p-4 ${
+                  b.id === 1 || b.id === 3
+                    ? "bg-light-blue shadow-resetButton"
+                    : "bg-light-yellow shadow-nextRound"
+                }`}
+                onClick={() => {
+                  switch (b.id) {
+                    case 1:
+                      resetGame();
+                      break;
+                    case 2:
+                      nextRound();
+                      break;
+                    case 3:
+                      setIsModalOpen(false);
+                      setRestart(false);
+                      break;
+                    case 4:
+                      resetGame();
+                      break;
+                  }
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );

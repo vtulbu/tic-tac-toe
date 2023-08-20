@@ -19,6 +19,7 @@ export const GameContext = React.createContext<GameContextType>([
     turn: Mark.X,
     isModalOpen: false,
     winner: null,
+    restart: false,
   },
   {
     setFirstPlayerMark: () => undefined,
@@ -29,10 +30,12 @@ export const GameContext = React.createContext<GameContextType>([
     setWinner: () => undefined,
     resetGame: () => undefined,
     nextRound: () => undefined,
+    setRestart: () => undefined,
   },
 ]);
 
 export const GameProvider: FC<PropsWithChildren> = (props) => {
+  const [restart, setRestart] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [winner, setWinner] = React.useState<Mark | null>(null);
   const [firstPlayersMark, setFirstPlayerMark] = React.useState<Mark>(Mark.O);
@@ -100,6 +103,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
       o: 0,
       ties: 0,
     });
+    setRestart(false);
   }, []);
 
   const nextRound = useCallback(() => {
@@ -120,6 +124,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
           turn,
           isModalOpen,
           winner,
+          restart,
         },
         {
           setFirstPlayerMark,
@@ -130,6 +135,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
           setWinner,
           resetGame,
           nextRound,
+          setRestart,
         },
       ]}
     >

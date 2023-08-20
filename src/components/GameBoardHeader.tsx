@@ -11,7 +11,7 @@ const arrow = {
 };
 
 export const GameBoardHeader = () => {
-  const [{ turn }] = useGameContext();
+  const [{ turn }, { setIsModalOpen, setRestart }] = useGameContext();
   return (
     <div className="flex justify-between items-center mb-16 ">
       <Logo />
@@ -26,6 +26,10 @@ export const GameBoardHeader = () => {
         className="p-4 rounded-2xl bg-silver shadow-resetButton refresh hover:bg-silver-hover"
         initial="rest"
         whileHover="hover"
+        onClick={() => {
+          setIsModalOpen(true);
+          setRestart(true);
+        }}
       >
         <motion.svg variants={arrow} width="20" height="20">
           <path
