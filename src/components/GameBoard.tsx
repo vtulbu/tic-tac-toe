@@ -18,7 +18,7 @@ export const GameBoard = () => {
         damping: 15,
         duration: 2,
       }}
-      className="h-screen p-6 w-full"
+      className="h-screen p-6 w-full flex flex-col items-center"
       initial={{ y: 800 }}
       animate={{ y: 0 }}
       exit={{ y: -800 }}

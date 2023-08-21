@@ -28,7 +28,7 @@ export const GameBoardResults = () => {
   };
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 max-w-360 min-w-360">
       {resultBoxes.map((e) => {
         return (
           <div

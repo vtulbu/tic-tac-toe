@@ -17,12 +17,20 @@ export default {
         turnInfo: `inset 0 -4px 0 0 #10212A`,
         nextRound: `inset 0 -4px 0 0 #CC8B13`,
       }),
+      maxWidth: {
+        "360": "360px",
+      },
     },
     fontFamily: {
       "Outfit": ["Outfit", "sans-serif"],
     },
     colors: {
       ...colors
+    },
+    minWidth: {
+      "280": "280px",
+      "300": "300px",
+      "360": "360px",
     }
   },
   plugins: [],

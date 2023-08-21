@@ -13,7 +13,7 @@ const arrow = {
 export const GameBoardHeader = () => {
   const [{ turn }, { setIsModalOpen, setRestart }] = useGameContext();
   return (
-    <div className="flex justify-between items-center mb-16 ">
+    <div className="flex items-center mb-16 w-full justify-between max-w-xs min-w-280">
       <Logo />
       <div className="py-3 px-4 bg-semi-dark-navy shadow-turnInfo rounded-md flex gap-3 items-center h-10">
         {turn === Mark.X ? <IconX /> : <IconO />}

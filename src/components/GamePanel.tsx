@@ -12,7 +12,7 @@ export const GamePanel = () => {
   ] = useGameContext();
 
   return (
-    <div className="grid gap-5 mb-5 grid-rows-3 grid-cols-3">
+    <div className="grid gap-5 mb-5 grid-rows-3 grid-cols-3 max-w-xs min-w-280">
       {gamePanel.map((c, i) => {
         return (
           <Card
