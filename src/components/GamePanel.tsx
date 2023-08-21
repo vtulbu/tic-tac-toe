@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import { useGameContext } from "../provider";
-import { Mark } from "../utils/constants";
+import { Mark, Opponent } from "../utils/constants";
 import { Card } from "./Card";
 import { IconO } from "./SVG/IconO";
 import { IconX } from "./SVG/IconX";
 
 export const GamePanel = () => {
-  const [{ gamePanel, turn }, { setGamePanel, setTurn }] = useGameContext();
+  const [
+    { gamePanel, turn, opponent, firstPlayersMark, winningLine },
+    { setGamePanel, setTurn },
+  ] = useGameContext();
 
   return (
     <div className="grid gap-5 mb-5 grid-rows-3 grid-cols-3">
@@ -14,7 +17,15 @@ export const GamePanel = () => {
         return (
           <Card
             key={`${c} ${i}`}
+            winningCard={winningLine.includes(i)}
             onClick={() => {
+              if (opponent === Opponent.CPU) {
+                const cpuMark = firstPlayersMark === Mark.X ? Mark.O : Mark.X;
+                if (turn === cpuMark) {
+                  return;
+                }
+              }
+
               if (c === null) {
                 const newGamePanel = [...gamePanel];
                 newGamePanel[i] = turn;

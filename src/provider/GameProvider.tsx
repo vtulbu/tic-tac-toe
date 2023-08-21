@@ -6,7 +6,7 @@ import {
   emptyGamePanel,
   zeroResults,
 } from "../utils/constants";
-import { getWinner } from "../utils/getWinner";
+import { getWinner, winningCombinations } from "../utils/getWinner";
 import { checkTie } from "../utils/checkTie";
 import { BoardType } from "../utils/types";
 import { changeFavicon } from "../utils/changeFavicon";
@@ -22,6 +22,7 @@ export const GameContext = React.createContext<GameContextType>([
     isModalOpen: false,
     winner: null,
     restart: false,
+    winningLine: [],
   },
   {
     setFirstPlayerMark: () => undefined,
@@ -45,6 +46,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
   const [turn, setTurn] = React.useState<Mark>(Mark.X);
   const [results, setResults] = React.useState(zeroResults);
   const [gamePanel, setGamePanel] = React.useState<BoardType>(emptyGamePanel);
+  const [winningLine, setWinningLine] = React.useState<number[]>([]);
 
   React.useEffect(() => {
     changeFavicon(turn);
@@ -53,12 +55,23 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
     const isOWinner = getWinner(gamePanel, Mark.O);
 
     if (isXWinner || isOWinner) {
-      setIsModalOpen(true);
+      // setIsModalOpen(true);
       setWinner(isXWinner ? Mark.X : Mark.O);
       setResults((prev) => ({
         ...prev,
         [isXWinner ? Mark.X : Mark.O]: prev[isXWinner ? Mark.X : Mark.O] + 1,
       }));
+
+      const winningCombination = winningCombinations.find((c) => {
+        const [a, b, d] = c;
+
+        return (
+          gamePanel[a] &&
+          gamePanel[a] === gamePanel[b] &&
+          gamePanel[a] === gamePanel[d]
+        );
+      });
+      setWinningLine(winningCombination || []);
 
       return;
     }
@@ -95,6 +108,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
     setWinner(null);
     setResults(zeroResults);
     setRestart(false);
+    setWinningLine([]);
   }, []);
 
   const nextRound = useCallback(() => {
@@ -102,6 +116,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
     setTurn(Mark.X);
     setIsModalOpen(false);
     setWinner(null);
+    setWinningLine([]);
   }, []);
 
   return (
@@ -116,6 +131,7 @@ export const GameProvider: FC<PropsWithChildren> = (props) => {
           isModalOpen,
           winner,
           restart,
+          winningLine,
         },
         {
           setFirstPlayerMark,

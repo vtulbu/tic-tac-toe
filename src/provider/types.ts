@@ -14,6 +14,7 @@ interface GameState {
   isModalOpen: boolean;
   winner: Mark | null;
   restart: boolean;
+  winningLine: number[];
 }
 
 interface GameActions {
